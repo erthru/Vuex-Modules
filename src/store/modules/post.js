@@ -24,7 +24,7 @@ export default {
           commit("SET_POSTS", data);
         })
         .catch((error) => {
-          console.error("fetchPosts() error: " + error);
+          console.error("fetchPost() error: " + error);
         });
     },
 
