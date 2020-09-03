@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <label>Show Single Post</label>
+    <Post :title="post.title" :body="post.body" />
+
+    <br />
+    <br />
+    <br />
+
+    <label>Show All Posts</label>
+    <div v-for="post in posts" :key="post.id">
+      <Post :title="post.title" :body="post.body" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapState } from "vuex";
+import Post from "@/components/Post";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    Post,
+  },
+
+  created() {
+    this.$store.dispatch("post/fetchPosts");
+    this.$store.dispatch("post/fetchPost", { id: 1 });
+  },
+
+  computed: {
+    ...mapState("post", ["posts", "post"]),
+  },
+};
+</script>
